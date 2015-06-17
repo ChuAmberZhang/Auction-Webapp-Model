@@ -66,10 +66,11 @@
 		}
 		function rowformater(value,row,index) {
 			var et = row.endTime.replace(/-/ig,'/');
+			alert("et:" + et);
 			var etd = new Date(et);
 			var nt = new Date();
 			if (nt > etd) {
-				return "Auction closed."
+				return "Auction closed.";
 			} else {
 				return "<a href='#' onclick='newBid()'>Place Bid</a>";
 			}
@@ -82,20 +83,20 @@
 		<a href='Administrator.jsp'>I am an administrator.</a>
 	</div>
 	<table 
-		id="dg" title="Books on Auction" class="easyui-datagrid" style="width:550px; height:250px"
-		url="getBook" rownumbers="true" fitColumns="true" singleSelect="true">
+		id="dg" title="Books on Auction" class="easyui-datagrid" style="width:auto; height:auto"
+		url="getBook" rownumbers="true" fitColumns="true" singleSelect="true" autoRowHeight="true" nowrap="false">
 		
 		<thead>
 			<tr>
-				<th field="id" width="100">id</th>
+				<th field="id" width="50">id</th>
 				<th field="name" width="200">Book Name</th>
-				<th field="desc" width="200">Description</th>
-				<th field="startingPrice" width="200">Starting Price</th>
-				<th field="startTime" width="200">Start Time</th>
-				<th field="endTime" width="200">End Time</th>
-				<th field="minIncre" width="200">Minimal Increment</th>
-				<th field="highestBid" width="200">Highest Bid</th>
-				<!-- th field="button" width="100" formatter="rowformater" Place a Bid -->
+				<th field="desc" width="600">Description</th>
+				<th field="startingPrice" width="250">Starting Price</th>
+				<th field="startTime" width="300">Start Time</th>
+				<th field="endTime" width="300">End Time</th>
+				<th field="minIncre" width="250">Minimal Increment</th>
+				<th field="highestBid" width="250">Highest Bid</th>
+				<th field="button" width="200" formatter="rowformater">Place a Bid</th>
 			</tr>
 		</thead>
 	</table>
@@ -122,7 +123,7 @@
 		</form>
 	</div>
 	<div id="dlg-buttons">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Place</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="placeBid()">Place Bid</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
 	</div>
 </body>

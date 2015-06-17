@@ -91,32 +91,35 @@
 </head>
 <body>
 	<h2>Book Action Administrator Page</h2>
+	<div class="switch-page">
+		<a href='index.jsp'>Back to bidder page.</a>
+	</div>
 	<table
-		id="dg" title="Books on Auction" class="easyui-datagrid" style="width:550px; height:250px"
-		url="getBook" rownumbers="true" fitColumns="true" singleSelect="true">
+		id="dg" title="Books on Auction" class="easyui-datagrid" style="width:auto; height:auto"
+		url="getBook" rownumbers="true" fitColumns="true" singleSelect="true" autoRowHeight="true" nowrap="false">
+		<div id="toolbar">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newBook()">New Book</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editBook()">Edit Book</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyBook()">Remove Book</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-tip" plain="true" onclick="openHistory()">Check Bid History</a>
+		</div>
 		
 		<thead>
 			<tr>
-				<th field="id" width="100">id</th>
-				<th field="name" width="100">Book Name</th>
-				<th field="desc" width="100">Description</th>
-				<th field="startingPrice" width="100">Starting Price</th>
-				<th field="startTime" width="100">Start Time</th>
-				<th field="endTime" width="100">End Time</th>
-				<th field="minIncre" width="100">Minimal Increment</th>
-				<th field="highestBid" width="100">Highest Bid</th>
+				<th field="id" width="50">id</th>
+				<th field="name" width="200">Book Name</th>
+				<th field="desc" width="600">Description</th>
+				<th field="startingPrice" width="250">Starting Price</th>
+				<th field="startTime" width="300">Start Time</th>
+				<th field="endTime" width="300">End Time</th>
+				<th field="minIncre" width="250">Minimal Increment</th>
+				<th field="highestBid" width="250">Highest Bid</th>
 			</tr>
 		</thead>
 	</table>
-	<div id="toolbar">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit User</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-tip" plain="true" onclick="openHistory()">Check Bid History</a>
-	</div>
 	
 	<div id="dlg-b" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-			closed="true" buttons="#dlg-buttons">
+			closed="true" buttons="#dlg-buttons" >
 		<div class="ftitle">Add a new Book</div>
 		<form id="fm-b" method="post" novalidate>
 			<div class="fitem">
@@ -133,11 +136,11 @@
 			</div>
 			<div class="fitem">
 				<label>Start Time</label>
-				<input name="startTime" class="easyui-validatebox" required="true">
+				<input name="startTime" class="easyui-validatebox">
 			</div>
 			<div class="fitem">
 				<label>End Time</label>
-				<input name="endTime" class="easyui-validatebox" required="true">
+				<input name="endTime" class="easyui-validatebox">
 			</div>
 			<div class="fitem">
 				<label>Minimal Increase per Bid</label>
@@ -146,8 +149,13 @@
 		</form>
 	</div>
 	
+	<div id="dlg-buttons">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveBook()">Save</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg-b').dialog('close')">Cancel</a>
+	</div>
+	
 	<div id="dlg-h" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-			closed="true" buttons="#dlg-buttons">
+			closed="true">
 		<table id="history" title="Bid Histroy" class="easyui-datagrid" style="width:550px;height:250px"
 			url="getBidHistoryById" rownumbers="true" fitColumns="true" singleSelect="true">
 			<thead>
@@ -161,9 +169,6 @@
 		</table>
 	</div>
 		
-	<div id="dlg-buttons">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Save</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
-	</div>
+
 </body>
 </html>
