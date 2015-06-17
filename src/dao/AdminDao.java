@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.sql.TimeStamp;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +38,7 @@ public class AdminDao {
 				b.setId(rs.getInt(1));
 				b.setBidder(rs.getString(2));
 				b.setBid(rs.getDouble(3));
-				b.setTime(rs.getTimeStamp(4));
+				b.setTime(rs.getTimestamp(4));
 				bidHis.add(b);
 			}
 		} catch (Exception e) {
@@ -50,7 +50,7 @@ public class AdminDao {
 		return bidHis;
 	}
 
-	public int saveBook(String name, String desc, double sp, TimeStamp startTime, TimeStamp endTime, double mi, double highestBid) {
+	public int saveBook(String name, String desc, double sp, Timestamp startTime, Timestamp endTime, double mi, double highestBid) {
 		String sql = "insert into bid_history (name, desc, startingPrice, startTime, endTime, minIncre, highestBid) values (?, ?, ?, ?, ?, ?, ?)";
 		int result = 0;
 		try {
@@ -58,8 +58,8 @@ public class AdminDao {
 			ps.setString(1, name);
 			ps.setString(2, desc);
 			ps.setDouble(3, sp);
-			ps.setTimeStamp(4, startTime);
-			ps.setTimeStamp(5, endTime);
+			ps.setTimestamp(4, startTime);
+			ps.setTimestamp(5, endTime);
 			ps.setDouble(6, mi);
 			ps.setDouble(7, highestBid);
 
@@ -73,7 +73,7 @@ public class AdminDao {
 		return result;
 	}
 
-	public int editBook(int idx, String name, String desc, double sp, TimeStamp startTime, TimeStamp endTime, double mi) {
+	public int editBook(int idx, String name, String desc, double sp, Timestamp startTime, Timestamp endTime, double mi) {
 		String sql = "update books set name = ?, desc = ? startingPrice = ? startTime = ? endTime = ? minIncre = ? where id = ?";
 		int result = 0;
 		try {
@@ -81,8 +81,8 @@ public class AdminDao {
 			ps.setString(1, name);
 			ps.setString(2, desc);
 			ps.setDouble(3, sp);
-			ps.setTimeStamp(4, startTime);
-			ps.setTimeStamp(5, endTime);
+			ps.setTimestamp(4, startTime);
+			ps.setTimestamp(5, endTime);
 			ps.setDouble(6, mi);
 			ps.setInt(7, idx);
 			result = ps.executeUpdate();

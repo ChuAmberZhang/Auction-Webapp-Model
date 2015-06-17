@@ -3,7 +3,7 @@ package action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.sql.TimeStamp;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,9 +68,9 @@ public class AdminAction extends ActionSupport {
         double mi = Double.parseDouble(minIncre);
         double highestBid = sp;
 
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.fff");
-        TimeStamp st = f.parse(startTime);
-        TimeStamp et = f.parse(endTime);
+        //SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.fff");
+        Timestamp st = Timestamp.valueOf(startTime);
+        Timestamp et = Timestamp.valueOf(endTime);
 
         AdminDao dao = new AdminDao();
         
@@ -94,13 +94,14 @@ public class AdminAction extends ActionSupport {
         String startTime = req.getParameter("startTime");
         String endTime = req.getParameter("endTime");
         String minIncre = req.getParameter("minIncre");
+        int idx = Integer.parseInt(id);
         double sp = Double.parseDouble(startingPrice);
         double mi = Double.parseDouble(minIncre);
         double highestBid = sp;
 
         //SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.fff");
-        TimeStamp st = TimeStamp.valueOf(startTime);
-        TimeStamp et = TimeStamp.valueOf(endTime);
+        Timestamp st = Timestamp.valueOf(startTime);
+        Timestamp et = Timestamp.valueOf(endTime);
         
         
         AdminDao dao = new AdminDao();
