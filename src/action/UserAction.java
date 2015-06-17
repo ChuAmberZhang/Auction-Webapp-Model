@@ -3,7 +3,7 @@ package action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
+import java.util.TimeStamp;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
@@ -66,16 +66,16 @@ public class UserAction extends ActionSupport {
     	String bid = req.getParameter("bid");
     	String id = req.getParameter("id");
 
-    	SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    	Date d = new Date();
+    	//SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	TimeStamp d = new TimeStamp(System.currentTimeMillis());
     	//String time = f.format(d);
 
     	UserDao dao = new UserDao();
     	int idx = Integer.parseInt(id);
     	double bidVal = Double.parseDouble(bid);
     	Book b = dao.getBookById(idx);
-    	Date st = b.getStartTime();
-    	Date et = b.getEndTime();
+    	TimeStamp st = b.getStartTime();
+    	TimeStamp et = b.getEndTime();
     	double mi = b.getMinIncre();
     	double hb = b.getHighestBid();
 

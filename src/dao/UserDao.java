@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.sql.TimeStamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +39,8 @@ public class UserDao {
 				b.setName(rs.getString(2));
 				b.setDesc(rs.getString(3));
 				b.setStartingPrice(rs.getDouble(4));
-				b.setStartTime(rs.getDate(5));
-				b.setEndTime(rs.getDate(6));
+				b.setStartTime(rs.getTimeStamp(5));
+				b.setEndTime(rs.getTimeStamp(6));
 				b.setMinIncre(rs.getDouble(7));
 				b.setHighestBid(rs.getDouble(8));
 				books.add(b);
@@ -66,8 +67,8 @@ public class UserDao {
 				b.setName(rs.getString(2));
 				b.setDesc(rs.getString(3));
 				b.setStartingPrice(rs.getDouble(4));
-				b.setStartTime(rs.getDate(5));
-				b.setEndTime(rs.getDate(6));
+				b.setStartTime(rs.getTimeStamp(5));
+				b.setEndTime(rs.getTimeStamp(6));
 				b.setMinIncre(rs.getDouble(7));
 				b.setHighestBid(rs.getDouble(8));
 			}
@@ -80,7 +81,7 @@ public class UserDao {
 		return b;
 	}
 
-	public int addBid(int id, String name, double bid, Date time) {
+	public int addBid(int id, String name, double bid, TimeStamp time) {
 		String sql = "insert into bid_history (id, name, bid, time) values (?, ?, ?, ?); update books set highestBid = ? where id = ?";
 		int result = 0;
 		try {
@@ -88,7 +89,7 @@ public class UserDao {
 			ps.setInt(1, id);
 			ps.setString(2, name);
 			ps.setDouble(3, bid);
-			ps.setDate(4, time);
+			ps.setTimeStamp(4, time);
 			ps.setDouble(5, bid);
 			ps.setInt(6, id);
 

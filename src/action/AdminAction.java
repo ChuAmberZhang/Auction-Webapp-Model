@@ -3,7 +3,7 @@ package action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
+import java.sql.TimeStamp;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,9 +68,9 @@ public class AdminAction extends ActionSupport {
         double mi = Double.parseDouble(minIncre);
         double highestBid = sp;
 
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date st = f.parse(startTime);
-        Date et = f.parse(endTime);
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.fff");
+        TimeStamp st = f.parse(startTime);
+        TimeStamp et = f.parse(endTime);
 
         AdminDao dao = new AdminDao();
         
@@ -98,9 +98,9 @@ public class AdminAction extends ActionSupport {
         double mi = Double.parseDouble(minIncre);
         double highestBid = sp;
 
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date st = f.parse(startTime);
-        Date et = f.parse(endTime);
+        //SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.fff");
+        TimeStamp st = TimeStamp.valueOf(startTime);
+        TimeStamp et = TimeStamp.valueOf(endTime);
         
         
         AdminDao dao = new AdminDao();
