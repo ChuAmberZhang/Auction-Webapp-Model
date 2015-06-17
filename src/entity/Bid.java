@@ -1,11 +1,11 @@
 package entity;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Bid {
 	private int id;
 	private String bidder;
 	private Double bid;
-	private Date time;
+	private Timestamp time;
 	
 	public void setId(int i) {
 		id = i;
@@ -31,11 +31,11 @@ public class Bid {
 		return bid;
 	}
 	
-	public void setTime(Date t) {
+	public void setTime(Timestamp t) {
 		time = t;
 	}
 	
-	public Date getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
 }
