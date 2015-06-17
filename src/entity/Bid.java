@@ -1,10 +1,11 @@
 package entity;
+import java.util.Date;
 
 public class Bid {
 	private int id;
 	private String bidder;
-	private int bid;
-	private String time;
+	private Double bid;
+	private Date time;
 	
 	public void setId(int i) {
 		id = i;
@@ -22,19 +23,19 @@ public class Bid {
 		return bidder;
 	}
 	
-	public void setBid(int n) {
+	public void setBid(Double n) {
 		bid = n;
 	}
 	
-	public int getBid() {
+	public Double getBid() {
 		return bid;
 	}
 	
-	public void setTime(String t) {
+	public void setTime(Date t) {
 		time = t;
 	}
 	
-	public String getTime() {
+	public Date getTime() {
 		return time;
 	}
 }

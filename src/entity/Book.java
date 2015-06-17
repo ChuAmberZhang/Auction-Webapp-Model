@@ -1,14 +1,15 @@
 package entity;
+import java.util.Date;
 
 public class Book {
 	private int id;
 	private String name;
 	private String desc;
-	private int startingPrice;
-	private String startTime;
-	private String endTime;
-	private int minIncre;
-	private int highestBid;
+	private double startingPrice;
+	private Date startTime;
+	private Date endTime;
+	private double minIncre;
+	private double highestBid;
 	
 	public void setId(int i) {
 		id = i;
@@ -34,43 +35,43 @@ public class Book {
 		return desc;
 	}
 	
-	public void setStartingPrice(int s) {
+	public void setStartingPrice(double s) {
 		startingPrice = s;
 	}
 	
-	public int getStartingPrice() {
+	public double getStartingPrice() {
 		return startingPrice;
 	}
 	
-	public void setStartTime(String t) {
+	public void setStartTime(Date t) {
 		startTime = t;
 	}
 	
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 	
-	public void setEndTime(String t) {
+	public void setEndTime(Date t) {
 		endTime = t;
 	}
 	
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 	
-	public void setMinIncre(int m) {
+	public void setMinIncre(double m) {
 		minIncre = m;
 	}
 	
-	public int getMinIncre() {
+	public double getMinIncre() {
 		return minIncre;
 	}
 	
-	public void setHighestBid(int h) {
+	public void setHighestBid(double h) {
 		highestBid = h;
 	}
 	
-	public int getHighestBid() {
+	public double getHighestBid() {
 		return highestBid;
 	}
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.i18n.encoding" value="GBK" />  
+   	<package name="user" extends="json-default" >  
+    	<action name="getBook" class="action.UserAction" method="getBook">  
+            <result type="json" >  
+            	<param name="root">resultObj</param>  
+            </result>  
+      	</action>
+      	<action name="placeBid" class="action.UserAction" method="placeBid">  
+            <result type="json" >  
+            	<param name="root">resultObj</param>  
+            </result>  
+      	</action>
+      	<action name="saveBook" class="action.AdminAction" method="saveBook">  
+            <result type="json" >  
+            	<param name="root">resultObj</param>  
+            </result>  
+      	</action>
+      	<action name="updateBook" class="action.AdminAction" method="updateBook">  
+            <result type="json" >  
+            	<param name="root">resultObj</param>  
+            </result>  
+      	</action>
+      	<action name="removeBook" class="action.AdminAction" method="removeBook">  
+            <result type="json" >  
+            	<param name="root">resultObj</param>  
+            </result>  
+      	</action>  
+      	<action name="getBidHistoryById" class="action.AdminAction" method="getBidHistoryById">
+      		<result type="json">
+      			<param name="root">resultObj</param>
+      		</result>
+      	</action> 
+   	</package>
+
+</struts>
