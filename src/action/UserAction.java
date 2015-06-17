@@ -21,7 +21,7 @@ import entity.Bid;
 import entity.Book;
 
 public class UserAction extends ActionSupport {
-	private JSONObject resultObj;// 鐟曚浇绻戦崶鐐插煂妞ょ敻娼伴惃鍑ON閺佺増宓侀敍灞肩鐎规俺顩﹂張濉痚tter,setter閺傝纭堕妴锟� 
+	private JSONObject resultObj;// 瑕佽繑鍥炲埌椤甸潰鐨凧SON鏁版嵁锛屼竴瀹氳鏈塯etter,setter鏂规硶銆� 
 	  
     public JSONObject getResultObj() {  
         return resultObj;  
@@ -53,9 +53,9 @@ public class UserAction extends ActionSupport {
             al.add(m); 
         }  
         Map<String, Object> json = new HashMap<String, Object>();  
-        json.put("total", books.size());// total闁匡拷鐎涙ɑ鏂侀幀鏄忣唶瑜版洘鏆�  
-        json.put("rows", al);// rows闁匡拷鐎涙ɑ鏂佸В蹇涖�夌拋鏉跨秿 list閿涘苯绻�妞ょ粯妲搁垾娓瀘ws閳ユ繂鍙ч柨顔跨槤  
-        resultObj = JSONObject.fromObject(json);// 閺嶇厧绱￠崠鏉沞sult娑擄拷鐣剧憰浣规ЦJSONObject  
+        json.put("total", books.size());// total閿�瀛樻斁鎬昏褰曟暟  
+        json.put("rows", al);// rows閿�瀛樻斁姣忛〉璁板綍 list锛屽繀椤绘槸鈥渞ows鈥濆叧閿瘝  
+        resultObj = JSONObject.fromObject(json);// 鏍煎紡鍖杛esult涓�畾瑕佹槸JSONObject  
           
         return SUCCESS;  
     }
@@ -102,7 +102,7 @@ public class UserAction extends ActionSupport {
 	    	else
 	    		json.put("msg", "oops");
     	}
-    	resultObj = JSONObject.fromObject(json);// 閺嶇厧绱￠崠鏉沞sult娑擄拷鐣剧憰浣规ЦJSONObject  
+    	resultObj = JSONObject.fromObject(json);// 鏍煎紡鍖杛esult涓�畾瑕佹槸JSONObject  
     	
         return SUCCESS;
     }
