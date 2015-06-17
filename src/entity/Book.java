@@ -1,13 +1,13 @@
 package entity;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Book {
 	private int id;
 	private String name;
 	private String desc;
 	private double startingPrice;
-	private Date startTime;
-	private Date endTime;
+	private Timestamp startTime;
+	private Timestamp endTime;
 	private double minIncre;
 	private double highestBid;
 	
@@ -43,19 +43,19 @@ public class Book {
 		return startingPrice;
 	}
 	
-	public void setStartTime(Date t) {
+	public void setStartTime(Timestamp t) {
 		startTime = t;
 	}
 	
-	public Date getStartTime() {
+	public Timestamp getStartTime() {
 		return startTime;
 	}
 	
-	public void setEndTime(Date t) {
+	public void setEndTime(Timestamp t) {
 		endTime = t;
 	}
 	
-	public Date getEndTime() {
+	public Timestamp getEndTime() {
 		return endTime;
 	}
 	
