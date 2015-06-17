@@ -64,13 +64,17 @@ public class AdminAction extends ActionSupport {
         String startTime = req.getParameter("startTime");
         String endTime = req.getParameter("endTime");
         String minIncre = req.getParameter("minIncre");
-        int sp = Integer.parseInt(startingPrice);
-        int mi = Integer.parseInt(minIncre);
-        int highestBid = sp;
+        double sp = Double.parseDouble(startingPrice);
+        double mi = Double.parseDouble(minIncre);
+        double highestBid = sp;
+
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date st = f.parse(startTime);
+        Date et = f.parse(endTime);
 
         AdminDao dao = new AdminDao();
         
-        int c = dao.saveBook(name, desc, sp, startTime, endTime, mi, highestBid);
+        int c = dao.saveBook(name, desc, sp, st, et, mi, highestBid);
         Map<String, Object> json = new HashMap<String, Object>();  
         if (c > 0)
             json.put("success", true);
@@ -90,13 +94,17 @@ public class AdminAction extends ActionSupport {
         String startTime = req.getParameter("startTime");
         String endTime = req.getParameter("endTime");
         String minIncre = req.getParameter("minIncre");
-        int idx = Integer.parseInt(id);
-        int sp = Integer.parseInt(startingPrice);
-        int mi = Integer.parseInt(minIncre);
+        double sp = Double.parseDouble(startingPrice);
+        double mi = Double.parseDouble(minIncre);
+        double highestBid = sp;
+
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date st = f.parse(startTime);
+        Date et = f.parse(endTime);
         
         
         AdminDao dao = new AdminDao();
-        int c = dao.editBook(idx, name, desc, sp, startTime, endTime, mi);
+        int c = dao.editBook(idx, name, desc, sp, st, et, mi);
         Map<String, Object> json = new HashMap<String, Object>();  
         if (c > 0)
             json.put("success", true);

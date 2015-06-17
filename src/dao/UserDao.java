@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 import entity.Book;
 import entity.Bid;
@@ -36,11 +37,11 @@ public class UserDao {
 				b.setId(rs.getInt(1));
 				b.setName(rs.getString(2));
 				b.setDesc(rs.getString(3));
-				b.setStartingPrice(rs.getInt(4));
-				b.setStartTime(rs.getString(5));
-				b.setEndTime(rs.getString(6));
-				b.setMinIncre(rs.getInt(7));
-				b.setHighestBid(rs.getInt(8));
+				b.setStartingPrice(rs.getDouble(4));
+				b.setStartTime(rs.getDate(5));
+				b.setEndTime(rs.getDate(6));
+				b.setMinIncre(rs.getDouble(7));
+				b.setHighestBid(rs.getDouble(8));
 				books.add(b);
 			}
 		} catch (Exception e) {
@@ -64,11 +65,11 @@ public class UserDao {
 				b.setId(rs.getInt(1));
 				b.setName(rs.getString(2));
 				b.setDesc(rs.getString(3));
-				b.setStartingPrice(rs.getInt(4));
-				b.setStartTime(rs.getString(5));
-				b.setEndTime(rs.getString(6));
-				b.setMinIncre(rs.getInt(7));
-				b.setHighestBid(rs.getInt(8));
+				b.setStartingPrice(rs.getDouble(4));
+				b.setStartTime(rs.getDate(5));
+				b.setEndTime(rs.getDate(6));
+				b.setMinIncre(rs.getDouble(7));
+				b.setHighestBid(rs.getDouble(8));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -79,16 +80,16 @@ public class UserDao {
 		return b;
 	}
 
-	public int addBid(int id, String name, int bid, String time) {
+	public int addBid(int id, String name, double bid, Date time) {
 		String sql = "insert into bid_history (id, name, bid, time) values (?, ?, ?, ?); update books set highestBid = ? where id = ?";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
 			ps.setString(2, name);
-			ps.setInt(3, bid);
-			ps.setString(4, time);
-			ps.setInt(5, bid);
+			ps.setDouble(3, bid);
+			ps.setDate(4, time);
+			ps.setDouble(5, bid);
 			ps.setInt(6, id);
 
 			result = ps.executeUpdate();

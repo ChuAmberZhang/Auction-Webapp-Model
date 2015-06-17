@@ -36,8 +36,8 @@ public class AdminDao {
 				Bid b = new Bid();
 				b.setId(rs.getInt(1));
 				b.setBidder(rs.getString(2));
-				b.setBid(rs.getInt(3));
-				b.setTime(rs.getString(4));
+				b.setBid(rs.getDouble(3));
+				b.setTime(rs.getDate(4));
 				bidHis.add(b);
 			}
 		} catch (Exception e) {
@@ -49,18 +49,18 @@ public class AdminDao {
 		return bidHis;
 	}
 
-	public int saveBook(String name, String desc, int sp, String startTime, String endTime, int mi, int highestBid) {
+	public int saveBook(String name, String desc, double sp, Date startTime, Date endTime, double mi, double highestBid) {
 		String sql = "insert into bid_history (name, desc, startingPrice, startTime, endTime, minIncre, highestBid) values (?, ?, ?, ?, ?, ?, ?)";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
 			ps.setString(2, desc);
-			ps.setInt(3, sp);
-			ps.setString(4, startTime);
-			ps.setString(5, endTime);
-			ps.setInt(6, mi);
-			ps.setInt(7, highestBid);
+			ps.setDouble(3, sp);
+			ps.setDate(4, startTime);
+			ps.setDate(5, endTime);
+			ps.setDouble(6, mi);
+			ps.setDouble(7, highestBid);
 
 			result = ps.executeUpdate();
 		} catch (Exception e) {
@@ -72,17 +72,17 @@ public class AdminDao {
 		return result;
 	}
 
-	public int editBook(int idx, String name, String desc, int sp, String startTime, String endTime, int mi) {
+	public int editBook(int idx, String name, String desc, double sp, Date startTime, Date endTime, double mi) {
 		String sql = "update books set name = ?, desc = ? startingPrice = ? startTime = ? endTime = ? minIncre = ? where id = ?";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
 			ps.setString(2, desc);
-			ps.setInt(3, sp);
-			ps.setString(4, startTime);
-			ps.setString(5, endTime);
-			ps.setInt(6, mi);
+			ps.setDouble(3, sp);
+			ps.setDate(4, startTime);
+			ps.setDate(5, endTime);
+			ps.setDouble(6, mi);
 			ps.setInt(7, idx);
 			result = ps.executeUpdate();
 		} catch (Exception e) {

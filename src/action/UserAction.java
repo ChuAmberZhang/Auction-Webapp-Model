@@ -68,18 +68,18 @@ public class UserAction extends ActionSupport {
 
     	SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	Date d = new Date();
-    	String time = f.format(d);
+    	//String time = f.format(d);
 
     	UserDao dao = new UserDao();
     	int idx = Integer.parseInt(id);
-    	int bidVal = Integer.parseInt(bid);
+    	double bidVal = Double.parseDouble(bid);
     	Book b = dao.getBookById(idx);
-    	String st = b.getStartTime();
-    	String et = b.getEndTime();
-    	int mi = b.getMinIncre();
-    	int hb = b.getHighestBid();
+    	Date st = b.getStartTime();
+    	Date et = b.getEndTime();
+    	double mi = b.getMinIncre();
+    	double hb = b.getHighestBid();
 
-    	Date sd = null;
+    	/*Date sd = null;
     	Date ed = null;
 
     	try {
@@ -87,16 +87,16 @@ public class UserAction extends ActionSupport {
             ed = f.parse(et);
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
 
     	Map<String, Object> json = new HashMap<String, Object>();  
         
     	if (bidVal < hb+mi)
     		json.put("msg", "Your bid must be at least "+mi+"higher than the highest bid.");
-    	else if (d.before(sd)||d.after(ed))
+    	else if (d.before(st)||d.after(et))
     		json.put("msg", "Watch the start and end time!");
     	else{
-    		int c = dao.addBid(idx, name, bidVal, time);
+    		int c = dao.addBid(idx, name, bidVal, d);
 	    	if (c > 0)
 	    		json.put("success", true);
 	    	else
