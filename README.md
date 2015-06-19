@@ -8,3 +8,5 @@ Status: On going.
 Authors: Chu Zhang and Yue Zheng.
 
 Purpose: Build a model for an auction web application to learn about CRUD application in web application development using mainly jsp and easyui. 
+
+Roles: Frontend--Yue Zheng, backend--Chu Zhang
