@@ -50,19 +50,20 @@ public class AdminDao {
 		return bidHis;
 	}
 
-	public int saveBook(String name, String desc, double sp, Timestamp startTime, Timestamp endTime, double mi, double highestBid) {
-		String sql = "insert into bid_history (name, desc, startingPrice, startTime, endTime, minIncre, highestBid) values (?, ?, ?, ?, ?, ?, ?)";
+	public int saveBook(String name, String descr, double sp, Timestamp startTime, Timestamp endTime, double mi, double highestBid) {
+		String sql = "insert into books (name, descr, startingPrice, startTime, endTime, minIncre, highestBid) values (?, ?, ?, ?, ?, ?, ?)";
 		int result = 0;
+		System.out.println("entered savebook dao");
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
-			ps.setString(2, desc);
+			ps.setString(2, descr);
 			ps.setDouble(3, sp);
 			ps.setTimestamp(4, startTime);
 			ps.setTimestamp(5, endTime);
 			ps.setDouble(6, mi);
 			ps.setDouble(7, highestBid);
-
+			System.out.println(ps.toString());
 			result = ps.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -73,13 +74,13 @@ public class AdminDao {
 		return result;
 	}
 
-	public int editBook(int idx, String name, String desc, double sp, Timestamp startTime, Timestamp endTime, double mi) {
-		String sql = "update books set name = ?, desc = ? startingPrice = ? startTime = ? endTime = ? minIncre = ? where id = ?";
+	public int editBook(int idx, String name, String descr, double sp, Timestamp startTime, Timestamp endTime, double mi) {
+		String sql = "update books set name = ?, descr = ?, startingPrice = ?, startTime = ?, endTime = ?, minIncre = ? where id = ?";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
-			ps.setString(2, desc);
+			ps.setString(2, descr);
 			ps.setDouble(3, sp);
 			ps.setTimestamp(4, startTime);
 			ps.setTimestamp(5, endTime);
@@ -96,16 +97,18 @@ public class AdminDao {
 	}
 
 	public int removeBook(int id) {
-		String sql = "delete from books where id = ?; delete from bid_history where id = ?";
+		String sql = "delete books.* from books where id = ?";
+		//System.out.println(id);
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
-			ps.setInt(2, id);
+			//System.out.print(ps);
 			result = ps.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			//System.out.println("exception message");
 		} finally {
 			db.close();
 		}

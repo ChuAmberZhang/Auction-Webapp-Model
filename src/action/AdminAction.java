@@ -31,6 +31,7 @@ public class AdminAction extends ActionSupport {
     }  
 
 	public String getBidHistoryById() { 
+		System.out.println("entered getbidhistorybyid action");
         HttpServletRequest req = ServletActionContext.getRequest();
         String i = req.getParameter("id"); 
         int id = Integer.parseInt(i);
@@ -57,12 +58,15 @@ public class AdminAction extends ActionSupport {
     }
 
     public String saveBook() {  
+    	System.out.println("savebook action");
         HttpServletRequest req = ServletActionContext.getRequest();
         String name = req.getParameter("name");
-        String desc = req.getParameter("desc");
+        String descr = req.getParameter("descr");
         String startingPrice = req.getParameter("startingPrice");
+        System.out.println("before get time param");
         String startTime = req.getParameter("startTime");
         String endTime = req.getParameter("endTime");
+        System.out.println("after get time param");
         String minIncre = req.getParameter("minIncre");
         double sp = Double.parseDouble(startingPrice);
         double mi = Double.parseDouble(minIncre);
@@ -72,13 +76,15 @@ public class AdminAction extends ActionSupport {
         Timestamp st = new Timestamp(System.currentTimeMillis());
         Timestamp et = new Timestamp(System.currentTimeMillis());
         
-        if (startTime != null)
+        if (startTime != "")
         	st = Timestamp.valueOf(startTime);
-        if (endTime != null)
+        if (endTime != "")
         	et = Timestamp.valueOf(endTime);
+        System.out.println(st);
         AdminDao dao = new AdminDao();
         
-        int c = dao.saveBook(name, desc, sp, st, et, mi, highestBid);
+        int c = dao.saveBook(name, descr, sp, st, et, mi, highestBid);
+        System.out.println("c=" + c);
         Map<String, Object> json = new HashMap<String, Object>();  
         if (c > 0)
             json.put("success", true);
@@ -93,7 +99,7 @@ public class AdminAction extends ActionSupport {
         HttpServletRequest req = ServletActionContext.getRequest();
         String id = req.getParameter("id");
         String name = req.getParameter("name");
-        String desc = req.getParameter("desc");
+        String descr = req.getParameter("descr");
         String startingPrice = req.getParameter("startingPrice");
         String startTime = req.getParameter("startTime");
         String endTime = req.getParameter("endTime");
@@ -113,7 +119,7 @@ public class AdminAction extends ActionSupport {
         	et = Timestamp.valueOf(endTime);
         
         AdminDao dao = new AdminDao();
-        int c = dao.editBook(idx, name, desc, sp, st, et, mi);
+        int c = dao.editBook(idx, name, descr, sp, st, et, mi);
         Map<String, Object> json = new HashMap<String, Object>();  
         if (c > 0)
             json.put("success", true);
@@ -125,6 +131,7 @@ public class AdminAction extends ActionSupport {
     }
 
     public String removeBook() {
+    	System.out.println("enter removebook action");
         HttpServletRequest req = ServletActionContext.getRequest();
         String id = req.getParameter("id");
         

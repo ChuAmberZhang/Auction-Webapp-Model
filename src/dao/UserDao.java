@@ -37,7 +37,7 @@ public class UserDao {
 				Book b = new Book();
 				b.setId(rs.getInt(1));
 				b.setName(rs.getString(2));
-				b.setDesc(rs.getString(3));
+				b.setDescr(rs.getString(3));
 				b.setStartingPrice(rs.getDouble(4));
 				b.setStartTime(rs.getTimestamp(5));
 				b.setEndTime(rs.getTimestamp(6));
@@ -65,7 +65,7 @@ public class UserDao {
 			while (rs.next()){
 				b.setId(rs.getInt(1));
 				b.setName(rs.getString(2));
-				b.setDesc(rs.getString(3));
+				b.setDescr(rs.getString(3));
 				b.setStartingPrice(rs.getDouble(4));
 				b.setStartTime(rs.getTimestamp(5));
 				b.setEndTime(rs.getTimestamp(6));

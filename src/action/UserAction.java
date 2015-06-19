@@ -44,7 +44,7 @@ public class UserAction extends ActionSupport {
             Map<String, Object> m = new HashMap<String, Object>();   
             m.put("id", b.getId());
             m.put("name", b.getName());  
-            m.put("desc", b.getDesc());
+            m.put("descr", b.getDescr());
             m.put("startingPrice", b.getStartingPrice());
             m.put("startTime", (b.getStartTime()).toString());
             m.put("endTime", (b.getEndTime()).toString());
