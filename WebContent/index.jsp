@@ -64,9 +64,8 @@
 				}
 			);
 		}
-		function rowformater(value,row,index) {
+		function rowformatter(value,row,index) {
 			var et = row.endTime.replace(/-/ig,'/');
-			alert("et:" + et);
 			var etd = new Date(et);
 			var nt = new Date();
 			if (nt > etd) {
@@ -90,13 +89,13 @@
 			<tr>
 				<th field="id" width="50">id</th>
 				<th field="name" width="200">Book Name</th>
-				<th field="desc" width="600">Description</th>
+				<th field="descr" width="600">Description</th>
 				<th field="startingPrice" width="250">Starting Price</th>
 				<th field="startTime" width="300">Start Time</th>
 				<th field="endTime" width="300">End Time</th>
 				<th field="minIncre" width="250">Minimal Increment</th>
 				<th field="highestBid" width="250">Highest Bid</th>
-				<th field="button" width="200" formatter="rowformater">Place a Bid</th>
+				<th field="button" width="200" formatter="rowformatter">Place a Bid</th>
 			</tr>
 		</thead>
 	</table>

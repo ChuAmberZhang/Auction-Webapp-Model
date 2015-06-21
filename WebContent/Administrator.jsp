@@ -43,6 +43,21 @@
 		function openHistory() {
 			$('#dlg-h').dialog('open').dialog('setTitle', "Bid History");
 		}
+		function getHistory() {
+			var row = $('#dg').datagrid('getSelected');
+			if (row) {
+				alert("row id:" + row.id);
+				$('#history').datagrid({
+					url:'getBidHistoryById?id=' + row.id,
+					columns:[[
+						{field:'id', title:'Book id', width:100},
+						{field:'bid', title:'Bid', width:100},
+						{field:'bidder', title:'Bidder', width:100},
+						{field:'time', title:'Time', width:100}]]
+				});
+			}	
+			$('#dlg-h').dialog('open').dialog('setTitle', "Bid History");
+		}
 		function editBook() {
 			var row = $('#dg').datagrid('getSelected');
 			if (row) {
@@ -57,9 +72,11 @@
 					url: url,
 					onSubmit: function() {return $(this).form('validate');},
 					success: function(result) {
+						
 						var result = eval('('+result+')');
 						if (result.success) {
-							$('#dlg').dialog('close');
+							
+							$('#dlg-b').dialog('close');
 							$('#dg').datagrid('reload');
 						} else {
 							$.messager.show({
@@ -76,8 +93,10 @@
 			if (row) {
 				$.messager.confirm('Confirm','Are you sure you want to remove this book from the auction?',function(r) {
 					if (r) {
-						$.post('removeBook', {id:row.id}, function (resutl) {
+						alert("confirmed removal");
+						$.post('removeBook', {id:row.id}, function (result) {
 							if (result.success) {
+								alert("success");
 								$('#dg').datagrid('reload');
 							} else {
 								$.messager.show({title: 'Error', msg: result.msg});	
@@ -87,6 +106,30 @@
 				});
 			}
 		}
+/* 		function timeFormatter() {
+            var y = date.getFullYear();  
+            var m = date.getMonth()+1;  
+            var d = date.getDate();  
+            var h = date.getHours();  
+            var min = date.getMinutes();  
+            var sec = date.getSeconds();  
+            var str = y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d)+' '+(h<10?('0'+h):h)+':'+(min<10?('0'+min):min)+':'+(sec<10?('0'+sec):sec);  
+            return str;
+		}
+ 		function timeParser() {
+            if (!s) return new Date();  
+            var y = s.substring(0,4);  
+            var m =s.substring(5,7);  
+            var d = s.substring(8,10);  
+            var h = s.substring(11,13);  
+            var min = s.substring(14,16);  
+            var sec = s.substring(17,19);  
+            if (!isNaN(y) && !isNaN(m) && !isNaN(d) && !isNaN(h) && !isNaN(min) && !isNaN(sec)){  
+                return new Date(y,m-1,d,h,min,sec);  
+            } else {  
+                return new Date();  
+            }  
+		}  */
 	</script>
 </head>
 <body>
@@ -101,14 +144,14 @@
 			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newBook()">New Book</a>
 			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editBook()">Edit Book</a>
 			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyBook()">Remove Book</a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-tip" plain="true" onclick="openHistory()">Check Bid History</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-tip" plain="true" onclick="getHistory()">Check Bid History</a>
 		</div>
 		
 		<thead>
 			<tr>
 				<th field="id" width="50">id</th>
 				<th field="name" width="200">Book Name</th>
-				<th field="desc" width="600">Description</th>
+				<th field="descr" width="600">Description</th>
 				<th field="startingPrice" width="250">Starting Price</th>
 				<th field="startTime" width="300">Start Time</th>
 				<th field="endTime" width="300">End Time</th>
@@ -118,7 +161,7 @@
 		</thead>
 	</table>
 	
-	<div id="dlg-b" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+	<div id="dlg-b" class="easyui-dialog" style="width:400px;height:300px;padding:10px 20px"
 			closed="true" buttons="#dlg-buttons" >
 		<div class="ftitle">Add a new Book</div>
 		<form id="fm-b" method="post" novalidate>
@@ -128,7 +171,7 @@
 			</div>
 			<div class="fitem">
 				<label>Book Description</label>
-				<input name="desc" class="easyui-validatebox" required="true">
+				<input name="descr" class="easyui-validatebox" required="true">
 			</div>
 			<div class="fitem">
 				<label>Starting Price</label>
@@ -136,11 +179,11 @@
 			</div>
 			<div class="fitem">
 				<label>Start Time</label>
-				<input name="startTime" class="easyui-validatebox">
+				<input name="startTime" class="easyui-datetimebox" style="width:200px;">
 			</div>
 			<div class="fitem">
 				<label>End Time</label>
-				<input name="endTime" class="easyui-validatebox">
+				<input name="endTime" class="easyui-datetimebox" style="width:200px;">
 			</div>
 			<div class="fitem">
 				<label>Minimal Increase per Bid</label>
@@ -156,8 +199,8 @@
 	
 	<div id="dlg-h" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 			closed="true">
-		<table id="history" title="Bid Histroy" class="easyui-datagrid" style="width:550px;height:250px"
-			url="getBidHistoryById" rownumbers="true" fitColumns="true" singleSelect="true">
+<!-- 		<table id="history" title="Bid Histroy" class="easyui-datagrid" style="width:550px;height:250px"
+			url="getHistoryUrl()" rownumbers="true" fitColumns="true" singleSelect="true">
 			<thead>
 				<tr>
 					<th field="id" width="100">Book id</th>
@@ -166,7 +209,8 @@
 					<th field="time" width="100">Time</th>
 				</tr>
 			</thead>
-		</table>
+		</table> -->
+		<table id="history" title="Bid Histroy" style="width:550px;height:250px" rownumbers="true" fitColumns="true" singleSelect="true"></table>
 	</div>
 		
 
