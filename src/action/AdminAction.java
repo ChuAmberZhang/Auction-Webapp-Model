@@ -3,6 +3,7 @@ package action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
+import sun.org.mozilla.javascript.internal.json.JsonParser.ParseException;
 import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -34,6 +36,7 @@ public class AdminAction extends ActionSupport {
 		System.out.println("entered getbidhistorybyid action");
         HttpServletRequest req = ServletActionContext.getRequest();
         String i = req.getParameter("id"); 
+        System.out.println("id:" + i);
         int id = Integer.parseInt(i);
         HttpServletResponse resp = ServletActionContext.getResponse();  
         resp.setContentType("application/json");  
@@ -57,16 +60,16 @@ public class AdminAction extends ActionSupport {
         return SUCCESS;  
     }
 
-    public String saveBook() {  
+    public String saveBook() throws java.text.ParseException {  
     	System.out.println("savebook action");
         HttpServletRequest req = ServletActionContext.getRequest();
         String name = req.getParameter("name");
         String descr = req.getParameter("descr");
         String startingPrice = req.getParameter("startingPrice");
-        System.out.println("before get time param");
+        //System.out.println("before get time param");
         String startTime = req.getParameter("startTime");
         String endTime = req.getParameter("endTime");
-        System.out.println("after get time param");
+        //System.out.println("startTime:"+startTime);
         String minIncre = req.getParameter("minIncre");
         double sp = Double.parseDouble(startingPrice);
         double mi = Double.parseDouble(minIncre);
@@ -76,11 +79,22 @@ public class AdminAction extends ActionSupport {
         Timestamp st = new Timestamp(System.currentTimeMillis());
         Timestamp et = new Timestamp(System.currentTimeMillis());
         
-        if (startTime != "")
-        	st = Timestamp.valueOf(startTime);
-        if (endTime != "")
-        	et = Timestamp.valueOf(endTime);
-        System.out.println(st);
+        SimpleDateFormat originalFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+    	if (startTime != "")
+	    {
+	    	Date startT = originalFormat.parse(startTime);
+	    	startTime = newFormat.format(startT);
+	    	st = Timestamp.valueOf(startTime);
+	    }
+	    if (endTime != "")
+	    {
+	    	Date endT = originalFormat.parse(endTime);
+	    	endTime = newFormat.format(endT);
+	    	et = Timestamp.valueOf(endTime);
+	    }
+	    System.out.println("startTime:"+st.toString());
         AdminDao dao = new AdminDao();
         
         int c = dao.saveBook(name, descr, sp, st, et, mi, highestBid);
@@ -95,7 +109,7 @@ public class AdminAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String updateBook() {
+    public String updateBook() throws java.text.ParseException {
         HttpServletRequest req = ServletActionContext.getRequest();
         String id = req.getParameter("id");
         String name = req.getParameter("name");
@@ -113,11 +127,22 @@ public class AdminAction extends ActionSupport {
         Timestamp st = new Timestamp(System.currentTimeMillis());
         Timestamp et = new Timestamp(System.currentTimeMillis());
         
-        if (startTime != null)
-        	st = Timestamp.valueOf(startTime);
-        if (endTime != null)
-        	et = Timestamp.valueOf(endTime);
+        SimpleDateFormat originalFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
+    	if (startTime != "")
+	    {
+	    	Date startT = originalFormat.parse(startTime);
+	    	startTime = newFormat.format(startT);
+	    	st = Timestamp.valueOf(startTime);
+	    }
+	    if (endTime != "")
+	    {
+	    	Date endT = originalFormat.parse(endTime);
+	    	endTime = newFormat.format(endT);
+	    	et = Timestamp.valueOf(endTime);
+	    }
+	    System.out.println("startTime:"+st.toString());
         AdminDao dao = new AdminDao();
         int c = dao.editBook(idx, name, descr, sp, st, et, mi);
         Map<String, Object> json = new HashMap<String, Object>();  

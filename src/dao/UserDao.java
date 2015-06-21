@@ -81,19 +81,26 @@ public class UserDao {
 		return b;
 	}
 
-	public int addBid(int id, String name, double bid, Timestamp time) {
-		String sql = "insert into bid_history (id, name, bid, time) values (?, ?, ?, ?); update books set highestBid = ? where id = ?";
-		int result = 0;
+	public int addBid(int id, String bidder, double bid, Timestamp time) {
+		System.out.println("entered addbid dao");
+		String sql = "insert into bid_history (id, bidder, bid, time) values (?, ?, ?, ?)";
+		String sql2 = "update books set highestBid = ? where id = ?";
+		int result = 0; 
+		int result2 = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
-			ps.setString(2, name);
+			ps.setString(2, bidder);
 			ps.setDouble(3, bid);
 			ps.setTimestamp(4, time);
-			ps.setDouble(5, bid);
-			ps.setInt(6, id);
-
+			System.out.println(ps.toString());
 			result = ps.executeUpdate();
+			
+			PreparedStatement ps2 = conn.prepareStatement(sql2);
+			ps2.setDouble(1, bid);
+			ps2.setInt(2, id);
+			System.out.println(ps2.toString());
+			result2 = ps2.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

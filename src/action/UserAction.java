@@ -62,9 +62,10 @@ public class UserAction extends ActionSupport {
 
     public String placeBid() {  
     	HttpServletRequest req = ServletActionContext.getRequest();
-    	String name = req.getParameter("name");
+    	String bidder = req.getParameter("bidder");
     	String bid = req.getParameter("bid");
     	String id = req.getParameter("id");
+    	System.out.println("bidder:"+bidder);
 
     	//SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	Timestamp d = new Timestamp(System.currentTimeMillis());
@@ -96,7 +97,8 @@ public class UserAction extends ActionSupport {
     	else if (d.before(st)||d.after(et))
     		json.put("msg", "Watch the start and end time!");
     	else{
-    		int c = dao.addBid(idx, name, bidVal, d);
+    		dao = new UserDao();
+    		int c = dao.addBid(idx, bidder, bidVal, d);
 	    	if (c > 0)
 	    		json.put("success", true);
 	    	else

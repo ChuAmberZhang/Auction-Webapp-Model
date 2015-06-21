@@ -27,10 +27,10 @@ public class AdminDao {
 	public ArrayList<Bid> getBidHistoryById(int id) {
 		ArrayList<Bid> bidHis = new ArrayList<Bid>();
 		String sql = "select * from bid_history where id = ?";
-		System.out.println(sql);
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
+			System.out.println(ps.toString());
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
