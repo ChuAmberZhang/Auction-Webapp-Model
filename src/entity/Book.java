@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 public class Book {
 	private int id;
 	private String name;
-	private String desc;
+	private String descr;
 	private double startingPrice;
 	private Timestamp startTime;
 	private Timestamp endTime;
@@ -27,12 +27,12 @@ public class Book {
 		return name;
 	}
 
-	public void setDesc(String d) {
-		desc = d;
+	public void setDescr(String d) {
+		descr = d;
 	}
 	
-	public String getDesc() {
-		return desc;
+	public String getDescr() {
+		return descr;
 	}
 	
 	public void setStartingPrice(double s) {
