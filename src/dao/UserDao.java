@@ -109,4 +109,48 @@ public class UserDao {
 		}
 		return result;
 	}
+	
+	public String getFinalBidder(int id, double highestBid) {
+		System.out.println("Entered getfinalbidder dao");
+		String finalBidder = null;
+		String sql = "select bidder from bid_history where (id, bid) = (?, ?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.setDouble(2, highestBid);
+			System.out.println(ps.toString());
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				finalBidder = rs.getString(1);
+			}
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		return finalBidder;
+	}
+	
+	/*public ArrayList<Map> closedAuctionAlert() {
+		System.out.println("entered closedAuctionAlert dao");
+		ArrayList endTimes = new ArrayList();
+		String sql = "select endTime from books";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Map<String, Object> m = new HashMap<String, Object>();
+				endTimes.add(rs.getTimestamp(1));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		return endTimes;
+		
+	}*/
 }
