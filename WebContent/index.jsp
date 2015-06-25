@@ -74,6 +74,10 @@
 				return "<a href='#' onclick='newBid()'>Place Bid</a>";
 			}
 		}
+		function refreshPage(){
+			   window.location.reload();
+			}
+		setInterval('refreshPage()',60000);
 	</script>
 </head>
 <body>
