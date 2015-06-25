@@ -130,23 +130,11 @@
                 return new Date();  
             }  
 		}  */
-		function auctionClosedAlert() {
-			$.ajax({
-				type: 'post',
-				url: 'closeAuctionAlert',
-				success : function(result) {
-					if (result.success) {
-						alert(result.msg);
-					}
-				}
-			});	
-		}
 		
 		function refreshPage() {
 			window.location.reload();
 		}
 		
-		setInterval('actionClosedAlert()',60000);
 		setInterval('refreshPage()',60000);
 	</script>
 </head>
