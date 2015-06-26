@@ -18,7 +18,7 @@
       	</action>
       	<action name="closedAuctionAlert" class="action.UserAction" method="closedAuctionAlert">
       		<result type="json" >
-      			<parm name="root">resultObj</parm>
+      			<param name="root">resultObj</param>
       		</result>
       	</action>
       	<action name="saveBook" class="action.AdminAction" method="saveBook">  

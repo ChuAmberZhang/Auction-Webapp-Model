@@ -110,10 +110,10 @@ public class UserDao {
 		return result;
 	}
 	
-	public String getFinalBidder(int id, double highestBid) {
-		System.out.println("Entered getfinalbidder dao");
-		String finalBidder = null;
-		String sql = "select bidder from bid_history where (id, bid) = (?, ?)";
+	public Bid getFinalBid(int id, double highestBid) {
+		System.out.println("Entered getfinalbid dao");
+		Bid finalBid = new Bid();
+		String sql = "select * from bid_history where (id, bid) = (?, ?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
@@ -121,15 +121,38 @@ public class UserDao {
 			System.out.println(ps.toString());
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
-				finalBidder = rs.getString(1);
+				finalBid.setId(rs.getInt(1));
+				finalBid.setBidder(rs.getString(2));
+				finalBid.setBid(rs.getDouble(3));
+				finalBid.setTime(rs.getTimestamp(4));
 			}
+			else finalBid = null;
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			db.close();
 		}
-		return finalBidder;
+		return finalBid;
+	}
+	
+	public void closeAuction(int id, Timestamp currTime) {
+		System.out.println("entered close auction");
+		String sql = "update books set endTime = ? where id = ?";
+		int result = 0;
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setTimestamp(1, currTime);
+			ps.setInt(2, id);
+			System.out.println(ps.toString());
+			result = ps.executeUpdate();
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		return;
 	}
 	
 	/*public ArrayList<Map> closedAuctionAlert() {

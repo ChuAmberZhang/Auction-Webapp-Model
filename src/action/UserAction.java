@@ -110,9 +110,10 @@ public class UserAction extends ActionSupport {
     }
     
     public String closedAuctionAlert() {
+    	System.out.println("entered closed auction alert action");
     	HttpServletResponse resp = ServletActionContext.getResponse();  
         resp.setContentType("application/json");  
-        String message = null;
+        String message = "";
         boolean alert = false;
         
         UserDao dao = new UserDao();
@@ -123,17 +124,25 @@ public class UserAction extends ActionSupport {
         for ( int i = 0; i < books.size(); i++ )
         {
         	Book currBook = books.get(i);
+        	dao = new UserDao();
+        	Bid finalBid = dao.getFinalBid(currBook.getId(), currBook.getHighestBid());
         	Timestamp et = currBook.getEndTime();
         	long diff = d.getTime() - et.getTime();
-        	if ( diff>=0 && diff<6000)
+        	if ( diff>=0 && diff<60000)
         	{
-        		message = "The auction for "+currBook.getName()+" has ended.";
-        		dao = new UserDao();
-        		String finalBidder = dao.getFinalBidder(currBook.getId(), currBook.getHighestBid());
-        		if (finalBidder != null)
-        			message += "This book has been sold to "+finalBidder+" for "+currBook.getHighestBid()+" yuan. ";
+        		alert = true;
+        		message += "The auction for "+currBook.getName()+" has ended.\n";
+        		//System.out.println("finalbidder:" + finalBid.getBidder());
+        		if (finalBid != null && finalBid.getBidder() != null)
+        			message += "This book has been sold to "+finalBid.getBidder()+" for "+currBook.getHighestBid()+" yuan.\n";
         	}
-        	
+        	else if ( diff < 0 && (finalBid == null || d.getTime() - finalBid.getTime().getTime() > 7200000 ))
+        	{
+        		alert = true;
+        		dao = new UserDao();
+        		dao.closeAuction(currBook.getId(), d);
+        		message += "The auction for "+currBook.getName()+" has been idle for over two hours and is now ended.\n";
+        	}
         }
         
         Map<String, Object> json = new HashMap<String, Object>();  
