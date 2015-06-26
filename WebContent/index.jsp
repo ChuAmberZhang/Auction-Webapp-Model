@@ -76,23 +76,25 @@
 		}
 		
 		function auctionClosedAlert() {
+			//alert("entering auction closed alert ajax");
 			$.ajax({
 				type: 'post',
-				url: 'closeAuctionAlert',
+				url: 'closedAuctionAlert',
 				success : function(result) {
 					if (result.success) {
 						alert(result.msg);
+						window.location.reload();
 					}
 				}
 			});	
 		}
 		
-		function refreshPage(){
+		/* function refreshPage(){
 			   window.location.reload();
-			}
+		} */
 		
-		setInterval('actionClosedAlert()',60000);
-		setInterval('refreshPage()',60000);
+		setInterval('auctionClosedAlert()',60000);
+		//setInterval('refreshPage()',60000);
 	</script>
 </head>
 <body>
