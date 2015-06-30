@@ -1,3 +1,7 @@
+/**
+ *@author Chu Zhang
+ *This is the AdminDao.java file for our Auction-Webapp-Model project. 
+ */
 package dao;
 
 import java.sql.Connection;
@@ -24,6 +28,9 @@ public class AdminDao {
 		conn = db.getConn();
 	}
 
+	/**
+	 *This method returns an ArrayList of the bids of a specific book
+	 */
 	public ArrayList<Bid> getBidHistoryById(int id) {
 		ArrayList<Bid> bidHis = new ArrayList<Bid>();
 		String sql = "select * from bid_history where id = ?";
@@ -50,6 +57,9 @@ public class AdminDao {
 		return bidHis;
 	}
 
+	/**
+	 *This method inserts a new book into the database
+	 */
 	public int saveBook(String name, String descr, double sp, Timestamp startTime, Timestamp endTime, double mi, double highestBid) {
 		String sql = "insert into books (name, descr, startingPrice, startTime, endTime, minIncre, highestBid) values (?, ?, ?, ?, ?, ?, ?)";
 		int result = 0;
@@ -74,6 +84,9 @@ public class AdminDao {
 		return result;
 	}
 
+	/**
+     *This method updates a book
+     */
 	public int editBook(int idx, String name, String descr, double sp, Timestamp startTime, Timestamp endTime, double mi) {
 		String sql = "update books set name = ?, descr = ?, startingPrice = ?, startTime = ?, endTime = ?, minIncre = ? where id = ?";
 		int result = 0;
@@ -96,6 +109,9 @@ public class AdminDao {
 		return result;
 	}
 
+	/**
+	 *This method removes a book from the database
+	 */
 	public int removeBook(int id) {
 		String sql = "delete books.* from books where id = ?";
 		//System.out.println(id);

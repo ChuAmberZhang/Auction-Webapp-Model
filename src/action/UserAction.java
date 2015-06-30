@@ -1,3 +1,7 @@
+/**
+ *@author Chu Zhang
+ *This is the UserAction.java file for our Auction-Webapp-Model project. 
+ */
 package action;
 
 import java.util.ArrayList;
@@ -21,7 +25,7 @@ import entity.Bid;
 import entity.Book;
 
 public class UserAction extends ActionSupport {
-	private JSONObject resultObj;// 鐟曚浇绻戦崶鐐插煂妞ょ敻娼伴惃鍑ON閺佺増宓侀敍灞肩鐎规俺顩﹂張濉痚tter,setter閺傝纭堕妴锟� 
+	private JSONObject resultObj;// The result json object to be passed into the jsp.
 	  
     public JSONObject getResultObj() {  
         return resultObj;  
@@ -31,6 +35,9 @@ public class UserAction extends ActionSupport {
         this.resultObj = resultObj;  
     }  
 
+    /**
+    *This method gets the list of books from the database.
+    */
 	public String getBook() {
 		System.out.println("getBook...");
 
@@ -53,13 +60,16 @@ public class UserAction extends ActionSupport {
             al.add(m); 
         }  
         Map<String, Object> json = new HashMap<String, Object>();  
-        json.put("total", books.size());// total闁匡拷鐎涙ɑ鏂侀幀鏄忣唶瑜版洘鏆�  
-        json.put("rows", al);// rows闁匡拷鐎涙ɑ鏂佸В蹇涖�夌拋鏉跨秿 list閿涘苯绻�妞ょ粯妲搁垾娓瀘ws閳ユ繂鍙ч柨顔跨槤  
-        resultObj = JSONObject.fromObject(json);// 閺嶇厧绱￠崠鏉沞sult娑擄拷鐣剧憰浣规ЦJSONObject  
+        json.put("total", books.size()); 
+        json.put("rows", al); 
+        resultObj = JSONObject.fromObject(json);// assign the created json object to resultObj 
           
         return SUCCESS;  
     }
 
+    /**
+     *This method recieves the bid information from the http and determines whether the bid is valid. If valid, the bid is inserted into the database.
+     */
     public String placeBid() {  
     	HttpServletRequest req = ServletActionContext.getRequest();
     	String bidder = req.getParameter("bidder");
@@ -92,9 +102,9 @@ public class UserAction extends ActionSupport {
 
     	Map<String, Object> json = new HashMap<String, Object>();  
         
-    	if (bidVal < hb+mi)
+    	if (bidVal < hb+mi) //Check whether the bid value is valid
     		json.put("msg", "Your bid must be at least "+mi+"higher than the highest bid.");
-    	else if (d.before(st)||d.after(et))
+    	else if (d.before(st)||d.after(et)) //Check whether the bid is made within the right time
     		json.put("msg", "Watch the start and end time!");
     	else{
     		dao = new UserDao();
@@ -104,39 +114,42 @@ public class UserAction extends ActionSupport {
 	    	else
 	    		json.put("msg", "oops");
     	}
-    	resultObj = JSONObject.fromObject(json);// 閺嶇厧绱￠崠鏉沞sult娑擄拷鐣剧憰浣规ЦJSONObject  
+    	resultObj = JSONObject.fromObject(json); 
     	
         return SUCCESS;
     }
     
+    /**
+     *This method checks for ended auctions and automatically ends auctions if no bid was placed within two hours of the latest bid.
+     */
     public String closedAuctionAlert() {
     	System.out.println("entered closed auction alert action");
     	HttpServletResponse resp = ServletActionContext.getResponse();  
         resp.setContentType("application/json");  
-        String message = "";
-        boolean alert = false;
+        String message = ""; //The alert message
+        boolean alert = false; //Whether to alert or not
         
         UserDao dao = new UserDao();
         ArrayList<Book> books = dao.getBook();   
         
         Timestamp d = new Timestamp(System.currentTimeMillis());
         
-        for ( int i = 0; i < books.size(); i++ )
+        for ( int i = 0; i < books.size(); i++ )//Loop through all the books
         {
         	Book currBook = books.get(i);
         	dao = new UserDao();
-        	Bid finalBid = dao.getFinalBid(currBook.getId(), currBook.getHighestBid());
+        	Bid finalBid = dao.getFinalBid(currBook.getId(), currBook.getHighestBid()); //Get the final bid for current book
         	Timestamp et = currBook.getEndTime();
         	long diff = d.getTime() - et.getTime();
-        	if ( diff>=0 && diff<60000)
+        	if ( diff>=0 && diff<60000) //If the current book ended within a minute after the current time, that is, it ended after the latest page reload
         	{
         		alert = true;
         		message += "The auction for "+currBook.getName()+" has ended.\n";
         		//System.out.println("finalbidder:" + finalBid.getBidder());
-        		if (finalBid != null && finalBid.getBidder() != null)
+        		if (finalBid != null && finalBid.getBidder() != null) //If there was a final bidder
         			message += "This book has been sold to "+finalBid.getBidder()+" for "+currBook.getHighestBid()+" yuan.\n";
         	}
-        	else if ( diff < 0 && (finalBid == null || d.getTime() - finalBid.getTime().getTime() > 7200000 ))
+        	else if ( diff < 0 && (finalBid == null || d.getTime() - finalBid.getTime().getTime() > 7200000 )) //If the auction hasn't ended yet and there was no bid placed within two hours since the last bid
         	{
         		alert = true;
         		dao = new UserDao();
@@ -146,9 +159,9 @@ public class UserAction extends ActionSupport {
         }
         
         Map<String, Object> json = new HashMap<String, Object>();  
-        json.put("success", alert);// total闁匡拷鐎涙ɑ鏂侀幀鏄忣唶瑜版洘鏆�  
-        json.put("msg", message);// rows闁匡拷鐎涙ɑ鏂佸В蹇涖�夌拋鏉跨秿 list閿涘苯绻�妞ょ粯妲搁垾娓瀘ws閳ユ繂鍙ч柨顔跨槤  
-        resultObj = JSONObject.fromObject(json);// 閺嶇厧绱￠崠鏉沞sult娑擄拷鐣剧憰浣规ЦJSONObject  
+        json.put("success", alert);  
+        json.put("msg", message);  
+        resultObj = JSONObject.fromObject(json);  
           
         return SUCCESS;
     }

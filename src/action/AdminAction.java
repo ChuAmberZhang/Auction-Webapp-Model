@@ -1,3 +1,7 @@
+/**
+ *@author Chu Zhang
+ *This is the AdminAction.java file for our Auction-Webapp-Model project. 
+ */
 package action;
 
 import java.util.ArrayList;
@@ -22,7 +26,7 @@ import entity.Bid;
 import entity.Book;
 
 public class AdminAction extends ActionSupport {
-	private JSONObject resultObj;// 瑕佽繑鍥炲埌椤甸潰鐨凧SON鏁版嵁锛屼竴瀹氳鏈塯etter,setter鏂规硶銆� 
+	private JSONObject resultObj;// The result json object to be passed into the jsp. 
 	  
     public JSONObject getResultObj() {  
         return resultObj;  
@@ -32,6 +36,9 @@ public class AdminAction extends ActionSupport {
         this.resultObj = resultObj;  
     }  
 
+    /**
+     *This method gets the bid history of a specific book
+     */
 	public String getBidHistoryById() { 
 		System.out.println("entered getbidhistorybyid action");
         HttpServletRequest req = ServletActionContext.getRequest();
@@ -53,13 +60,16 @@ public class AdminAction extends ActionSupport {
             al.add(m); 
         }  
         Map<String, Object> json = new HashMap<String, Object>();  
-        json.put("total", bidHis.size());// total閿�瀛樻斁鎬昏褰曟暟  
-        json.put("rows", al);// rows閿�瀛樻斁姣忛〉璁板綍 list锛屽繀椤绘槸鈥渞ows鈥濆叧閿瘝  
-        resultObj = JSONObject.fromObject(json);// 鏍煎紡鍖杛esult涓�畾瑕佹槸JSONObject  
+        json.put("total", bidHis.size()); 
+        json.put("rows", al); 
+        resultObj = JSONObject.fromObject(json);
           
         return SUCCESS;  
     }
 
+    /**
+     *This method inserts the new book for auction into the database.
+     */
     public String saveBook() throws java.text.ParseException {  
     	System.out.println("savebook action");
         HttpServletRequest req = ServletActionContext.getRequest();
@@ -73,22 +83,22 @@ public class AdminAction extends ActionSupport {
         String minIncre = req.getParameter("minIncre");
         double sp = Double.parseDouble(startingPrice);
         double mi = Double.parseDouble(minIncre);
-        double highestBid = sp;
+        double highestBid = sp; //default highestBid is equal to the starting price
 
         //SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.fff");
-        Timestamp st = new Timestamp(System.currentTimeMillis());
-        Timestamp et = new Timestamp(System.currentTimeMillis());
+        Timestamp st = new Timestamp(System.currentTimeMillis());//default start time
+        Timestamp et = new Timestamp(System.currentTimeMillis());//default end time
         
         SimpleDateFormat originalFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
-    	if (startTime != "")
+    	if (startTime != "")//if the startTime parameter is not empty, format it, convert it to a timestamp and assign it to st
 	    {
 	    	Date startT = originalFormat.parse(startTime);
 	    	startTime = newFormat.format(startT);
 	    	st = Timestamp.valueOf(startTime);
 	    }
-	    if (endTime != "")
+	    if (endTime != "")//if the endTime parameter is not empty, format it, convert it to a timestamp and assign it to et
 	    {
 	    	Date endT = originalFormat.parse(endTime);
 	    	endTime = newFormat.format(endT);
@@ -104,11 +114,14 @@ public class AdminAction extends ActionSupport {
             json.put("success", true);
         else
             json.put("msg", "oops");
-        resultObj = JSONObject.fromObject(json);// 鏍煎紡鍖杛esult涓�畾瑕佹槸JSONObject  
+        resultObj = JSONObject.fromObject(json); 
         
         return SUCCESS;
     }
 
+    /**
+     *This method updates a book
+     */
     public String updateBook() throws java.text.ParseException {
         HttpServletRequest req = ServletActionContext.getRequest();
         String id = req.getParameter("id");
@@ -124,19 +137,19 @@ public class AdminAction extends ActionSupport {
         double highestBid = sp;
 
         //SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.fff");
-        Timestamp st = new Timestamp(System.currentTimeMillis());
-        Timestamp et = new Timestamp(System.currentTimeMillis());
+        Timestamp st = new Timestamp(System.currentTimeMillis());//default start time
+        Timestamp et = new Timestamp(System.currentTimeMillis());//default end time
         
         SimpleDateFormat originalFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
-    	if (startTime != "")
+    	if (startTime != "")//if the startTime parameter is not empty, format it, convert it to a timestamp and assign it to st
 	    {
 	    	Date startT = originalFormat.parse(startTime);
 	    	startTime = newFormat.format(startT);
 	    	st = Timestamp.valueOf(startTime);
 	    }
-	    if (endTime != "")
+	    if (endTime != "")//if the endTime parameter is not empty, format it, convert it to a timestamp and assign it to et
 	    {
 	    	Date endT = originalFormat.parse(endTime);
 	    	endTime = newFormat.format(endT);
@@ -155,6 +168,9 @@ public class AdminAction extends ActionSupport {
         return SUCCESS;
     }
 
+    /**
+     *This method deletes the selected book
+     */
     public String removeBook() {
     	System.out.println("enter removebook action");
         HttpServletRequest req = ServletActionContext.getRequest();

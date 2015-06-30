@@ -1,3 +1,7 @@
+/**
+ *@author Chu Zhang
+ *This is the UserDao.java file for our Auction-Webapp-Model project. 
+ */
 package dao;
 
 import java.sql.Connection;
@@ -25,6 +29,9 @@ public class UserDao {
 		conn = db.getConn();
 	}
 
+	/**
+	 *This method returns an ArrayList of all the books
+	 */
 	public ArrayList<Book> getBook() {
 		ArrayList<Book> books = new ArrayList<Book>();
 		String sql = "select * from books";
@@ -54,6 +61,10 @@ public class UserDao {
 		return books;
 	}
 
+	/**
+	 *This method returns a specific Book object
+	 *Used in placeBid action to determine if the bid is valid
+	 */
 	public Book getBookById(int id) {
 		Book b = new Book();
 		String sql = "select * from books where id = ?";
@@ -81,6 +92,9 @@ public class UserDao {
 		return b;
 	}
 
+	/**
+	 *This method inserts a valid bid into the bid history and updates the highestBid of the corresponding book.
+	 */
 	public int addBid(int id, String bidder, double bid, Timestamp time) {
 		System.out.println("entered addbid dao");
 		String sql = "insert into bid_history (id, bidder, bid, time) values (?, ?, ?, ?)";
@@ -110,6 +124,10 @@ public class UserDao {
 		return result;
 	}
 	
+	/**
+	 *This method returns the final bid of a specific book.
+	 *Used in determining ended auctions
+	 */
 	public Bid getFinalBid(int id, double highestBid) {
 		System.out.println("Entered getfinalbid dao");
 		Bid finalBid = new Bid();
@@ -136,6 +154,9 @@ public class UserDao {
 		return finalBid;
 	}
 	
+	/**
+	 *This method ends an auction and updates the endTime
+	 */
 	public void closeAuction(int id, Timestamp currTime) {
 		System.out.println("entered close auction");
 		String sql = "update books set endTime = ? where id = ?";
