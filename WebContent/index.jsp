@@ -1,3 +1,7 @@
+<!-- A web page for online book auctions. 
+AUTHOR: Yue Zheng
+ACKNOWLEDGMENTS: This web page is written based on lecture examples of Pingjian Zhang.-->
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -83,18 +87,14 @@
 				success : function(result) {
 					if (result.success) {
 						alert(result.msg);
-						window.location.reload();
 					}
+					window.location.reload();
 				}
 			});	
 		}
 		
-		/* function refreshPage(){
-			   window.location.reload();
-		} */
-		
 		setInterval('auctionClosedAlert()',60000);
-		//setInterval('refreshPage()',60000);
+
 	</script>
 </head>
 <body>
@@ -102,6 +102,8 @@
 	<div class="switch-page">
 		<a href='Administrator.jsp'>I am an administrator.</a>
 	</div>
+	
+	<!-- table displaying information of the book auctions -->
 	<table 
 		id="dg" title="Books on Auction" class="easyui-datagrid" style="width:auto; height:auto"
 		url="getBook" rownumbers="true" fitColumns="true" singleSelect="true" autoRowHeight="true" nowrap="false">
@@ -120,6 +122,8 @@
 			</tr>
 		</thead>
 	</table>
+	
+	<!-- pop-up window for bidders to place bids on books -->
 	<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 		closed="true" buttons="#dlg-buttons">
 		<div class="ftitle">Place a Bid</div>

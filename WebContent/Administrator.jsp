@@ -1,3 +1,6 @@
+<!-- The web page for administrators of the book auction website.
+AUTHOR: Yue Zheng
+ACKNOWLEDGMENT: This web page is written based on the lecture examples of Pingjian Zhang. -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -143,6 +146,8 @@
 	<div class="switch-page">
 		<a href='index.jsp'>Back to bidder page.</a>
 	</div>
+	
+	<!-- table of books on auction -->
 	<table
 		id="dg" title="Books on Auction" class="easyui-datagrid" style="width:auto; height:auto"
 		url="getBook" rownumbers="true" fitColumns="true" singleSelect="true" autoRowHeight="true" nowrap="false">
@@ -167,6 +172,7 @@
 		</thead>
 	</table>
 	
+	<!-- dialog for administrators to edit or add a book for auction -->
 	<div id="dlg-b" class="easyui-dialog" style="width:400px;height:300px;padding:10px 20px"
 			closed="true" buttons="#dlg-buttons" >
 		<div class="ftitle">Add a new Book</div>
@@ -203,19 +209,9 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg-b').dialog('close')">Cancel</a>
 	</div>
 	
+	<!-- pop-up table of bid history of a book -->
 	<div id="dlg-h" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 			closed="true">
-<!-- 		<table id="history" title="Bid Histroy" class="easyui-datagrid" style="width:550px;height:250px"
-			url="getHistoryUrl()" rownumbers="true" fitColumns="true" singleSelect="true">
-			<thead>
-				<tr>
-					<th field="id" width="100">Book id</th>
-					<th field="bidder" width="100">Bidder</th>
-					<th field="bid" width="100">Bid</th>
-					<th field="time" width="100">Time</th>
-				</tr>
-			</thead>
-		</table> -->
 		<table id="history" title="Bid Histroy" style="width:550px;height:250px" rownumbers="true" fitColumns="true" singleSelect="true"></table>
 	</div>
 		
